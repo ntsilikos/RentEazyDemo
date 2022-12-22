@@ -11,13 +11,7 @@ public class Tenant {
     private boolean hasPet;
     private LocalDate moveInDate;
 
-    public Tenant(String tenantName, String tenantPhone, BigDecimal monthlyPayment, BigDecimal currentRentOwed, boolean hasPet, LocalDate moveInDate) {
-        this.tenantName = tenantName;
-        this.tenantPhone = tenantPhone;
-        this.monthlyPayment = monthlyPayment;
-        this.currentRentOwed = currentRentOwed;
-        this.hasPet = hasPet;
-        this.moveInDate = moveInDate;
+    public Tenant() {
     }
 
     public String getTenantName() {
