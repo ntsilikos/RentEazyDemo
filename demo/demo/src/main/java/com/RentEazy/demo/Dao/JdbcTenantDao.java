@@ -45,6 +45,20 @@ public class JdbcTenantDao implements TenantDao{
     }
 
     @Override
+    public ArrayList<Tenant> getTenantByName(String name) {
+
+        ArrayList<Tenant> tenants = new ArrayList<>();
+        String sql = "SELECT tenant_name FROM tenants WHERE tenant_name = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, name);
+        // implement the method to retrieve a tenant by name
+        while(results.next()) {
+            Tenant tenant = mapRowToTenant(results);
+            tenants.add(tenant);
+        }
+        return tenants;
+    }
+
+    @Override
     public Tenant mapRowToTenant(SqlRowSet rowSet) {
         Tenant tenant = new Tenant();
         tenant.setTenantName(rowSet.getString("tenant_name"));

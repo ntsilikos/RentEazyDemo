@@ -6,7 +6,9 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import java.util.ArrayList;
 
 public interface TenantDao {
+
     boolean create(Tenant tenant);
     ArrayList<Tenant> listTenants();
+    ArrayList<Tenant> getTenantByName(String name);
     Tenant mapRowToTenant(SqlRowSet rowSet);
 }

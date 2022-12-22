@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
@@ -22,6 +23,16 @@ public class MainController {
     public String testControl() {
 
         return "hello world";
+    }
+
+    @GetMapping("/tenants")
+    public ArrayList<Tenant> listTenants() {
+        return tenantDao.listTenants();
+    }
+
+    @GetMapping("/tenants/{name}")
+    public ArrayList<Tenant> getTenantByName(@PathVariable String name) {
+        return tenantDao.getTenantByName(name);
     }
 
     @PostMapping

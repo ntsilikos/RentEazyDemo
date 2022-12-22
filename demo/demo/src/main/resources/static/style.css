@@ -3,14 +3,35 @@
 }
 
 body {
-    background-color: white;
+  background-color: #333333;
+}
+
+.homepage-button-link {
+  display: inline-block;
+  width: 50%;
+  background-color: #663399;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.homepage-button-link:hover {
+  background-color: #552288;
+}
+
+.homepage-button-link:active {
+  transform: scale(0.95);
 }
 
 form {
-  width: 30%; /* use a relative width */
-  background-color: white;
+  width: 30%;
+  background-color: #333333;
   margin: auto;
-  border: 1px solid #ccc;
+  border: 1px solid #666666;
   border-radius: 5px;
   padding: 20px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
@@ -21,6 +42,7 @@ form label {
   margin-bottom: 10px;
   font-size: 14px;
   font-weight: bold;
+  color: #ffffff;
 }
 
 form input[type="text"],
@@ -30,14 +52,16 @@ form input[type="date"] {
   padding: 12px 20px;
   margin-bottom: 20px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
+  border: 1px solid #666666;
   border-radius: 4px;
   font-size: 16px;
+  color: #ffffff;
+  background-color: #444444;
 }
 
 form input[type="submit"] {
   width: 100%;
-  background-color: #119DA4;
+  background-color: #663399;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -55,26 +79,75 @@ form input[type="submit"] {
 }
 
 form input[type="submit"]:hover {
-  background-color: #0C7489;
+  background-color: #552288;
 }
 
-/* Media queries */
+.hidden {
+  background-color: transparent;
+}
+
+ul#tenant-list {
+list-style: none;
+padding: 20px;
+margin: 0;
+background-color: #666666;
+width: 50%;
+border-radius: 5px;
+}
+
+ul#tenant-list li {
+font-size: 16px;
+color: #ffffff;
+background-color: #444444;
+border-radius: 4px;
+padding: 12px 20px;
+margin-bottom: 20px;
+}
+
+button#open-form-button,
+button#open-list-button {
+  display: inline-block;
+  width: 50%;
+  background-color: #663399;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button#open-form-button:hover,
+button#open-list-button:hover {
+  background-color: #552288;
+}
+
+button#open-form-button:active,
+button#open-list-button:active {
+  transform: scale(0.95);
+}
+
 @media (max-width: 600px) {
   form {
-    width: 90%; /* make the form even more narrow on small screens */
+    width: 90%;
   }
 
   form label {
-    font-size: 12px; /* reduce the font size of the labels */
+    font-size: 12px;
   }
 
   form input[type="text"],
   form input[type="number"],
   form input[type="date"] {
-    padding: 6px 10px; /* reduce the padding of the input fields */
+    padding: 6px 10px;
   }
 
   form input[type="submit"] {
-    padding: 10px; /* reduce the padding of the submit button */
+    padding: 10px;
   }
+
+
+
+
 }
