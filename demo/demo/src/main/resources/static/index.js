@@ -57,6 +57,7 @@ form.addEventListener('submit', (event) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
+      getTenants();
     });
 });
 

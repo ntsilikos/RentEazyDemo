@@ -34,6 +34,11 @@ public class JdbcTenantDao implements TenantDao{
     }
 
     @Override
+    public boolean edit(String name) {
+        return false;
+    }
+
+    @Override
     public ArrayList<Tenant> listTenants() {
         ArrayList<Tenant> tenants = new ArrayList<>();
 
