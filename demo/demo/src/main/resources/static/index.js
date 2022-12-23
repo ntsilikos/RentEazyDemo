@@ -1,20 +1,42 @@
-const form = document.getElementById('tenant-form');
-
+let formOpen = false;
 const openFormButton = document.getElementById('open-form-button');
+const form = document.getElementById('tenant-form');
 openFormButton.addEventListener('click', () => {
-  form.style.display = 'block';
-  openFormButton.style.display = 'none';
-  openListButton.style.display = 'none';
+  // Call the getTenants function
+  if(formOpen == false) {
+        form.style.display = 'block';
+        openFormButton.innerHTML = "Close Form"
+        formOpen = true;
+  }
+  else {
+        openFormButton.innerHTML = "Add Tenant"
+        formOpen = false;
+        form.style.display = 'none'
+  }
 });
 
-const closeFormButton = document.getElementById('close-form-button');
-closeFormButton.addEventListener('click', () => {
-  form.style.display = 'none';
-  openFormButton.style.display = 'block';
-  openListButton.style.display = 'block';
+
+
+let tableOpen = false;
+const viewTenantsButton = document.getElementById('open-list-button');
+let tenantTable = document.getElementById('list-of-tenants');
+viewTenantsButton.addEventListener('click', () => {
+  // Call the getTenants function
+  if(tableOpen == false) {
+        tenantTable.style.display = 'block'
+        viewTenantsButton.innerHTML = "Close Tenants Table"
+        getTenants();
+        tableOpen = true;
+
+  }
+  else {
+        viewTenantsButton.innerHTML = "Open Tenants Table"
+        tableOpen = false;
+        tenantTable.style.display = 'none'
+  }
 });
 
-const openListButton = document.getElementById('open-list-button');
+
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -39,21 +61,57 @@ form.addEventListener('submit', (event) => {
 });
 
 
-let listFilled = false;
+function getTenants(name) {
+  // Make a GET request to the endpoint that returns the list of tenants
+  fetch(`/tenants${name ? `?name=${name}` : ''}`)
+    .then(response => response.json()) // Parse the response as JSON
+    .then(tenants => {
+      // Get the table element
+      const table = document.getElementById('list-of-tenants');
 
-const button = document.getElementById('test-button');
-openListButton.addEventListener('click', () => {
-  if (!listFilled) {
-    fetch('/tenants')
-      .then(response => response.json())
-      .then(tenants => {
-        const list = document.getElementById('tenant-list');
-        for (const tenant of tenants) {
-          const item = document.createElement('li');
-          item.textContent = tenant.tenantName;
-          list.appendChild(item);
-        }
-        listFilled = true;
+      // Clear the table
+      table.innerHTML = '';
+
+      // Set the table headers
+      table.innerHTML = `
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Monthly Payment</th>
+          <th>Current Rent Owed</th>
+          <th>Has Pet</th>
+          <th>Move-in Date</th>
+        </tr>
+      `;
+
+      // Add a row for each tenant
+      tenants.forEach(tenant => {
+        table.innerHTML += `
+          <tr>
+            <td>${tenant.tenantName}</td>
+            <td>${tenant.tenantPhone}</td>
+            <td>${tenant.monthlyPayment}</td>
+            <td>${tenant.currentRentOwed}</td>
+            <td>${tenant.hasPet ? 'Yes' : 'No'}</td>
+            <td>${tenant.moveInDate}</td>
+            <td><button class="delete-button" data-id="${tenant.tenantName}">Delete</button></td>
+            <td><button class="edit-button" data-id="${tenant.tenantName}">Edit</button></td>
+          </tr>
+        `;
       });
-  }
-});
+
+      // Add event listeners to the delete buttons
+      const deleteButtons = document.getElementsByClassName('delete-button');
+      for (const button of deleteButtons) {
+        button.addEventListener('click', (event) => {
+          const tenantName = event.target.getAttribute('data-id');
+          fetch(`/tenants/${tenantName}`, {
+            method: 'DELETE',
+          }).then(() => {
+            // Refresh the table after deleting a tenant
+            getTenants();
+          });
+        });
+      }
+    });
+}

@@ -25,6 +25,13 @@ public class MainController {
         return "hello world";
     }
 
+    @DeleteMapping("/tenants/{name}")
+    @ResponseBody
+    public boolean deleteTenant(@PathVariable String name) {
+        return tenantDao.delete(name);
+    }
+
+
     @GetMapping("/tenants")
     public ArrayList<Tenant> listTenants() {
         return tenantDao.listTenants();

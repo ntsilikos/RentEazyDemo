@@ -28,10 +28,17 @@ public class JdbcTenantDao implements TenantDao{
     }
 
     @Override
+    public boolean delete(String name) {
+        String sql = "DELETE FROM tenants WHERE tenant_name = ?";
+        return jdbcTemplate.update(sql, name) == 1;
+    }
+
+    @Override
     public ArrayList<Tenant> listTenants() {
         ArrayList<Tenant> tenants = new ArrayList<>();
 
-        String sql = "SELECT tenant_name FROM tenants";
+        String sql = "SELECT tenant_name, tenant_phone, monthly_payment, current_rent_owed, has_pet, move_in_date" +
+                " FROM tenants";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
@@ -48,7 +55,7 @@ public class JdbcTenantDao implements TenantDao{
     public ArrayList<Tenant> getTenantByName(String name) {
 
         ArrayList<Tenant> tenants = new ArrayList<>();
-        String sql = "SELECT tenant_name FROM tenants WHERE tenant_name = ?";
+        String sql = "SELECT tenant_name, tenant_phone, monthly_payment, current_rent_owed, has_pet, move_in_date FROM tenants WHERE tenant_name = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, name);
         // implement the method to retrieve a tenant by name
         while(results.next()) {
@@ -62,6 +69,11 @@ public class JdbcTenantDao implements TenantDao{
     public Tenant mapRowToTenant(SqlRowSet rowSet) {
         Tenant tenant = new Tenant();
         tenant.setTenantName(rowSet.getString("tenant_name"));
+        tenant.setTenantPhone(rowSet.getString("tenant_phone"));
+        tenant.setMonthlyPayment(rowSet.getBigDecimal("monthly_payment"));
+        tenant.setCurrentRentOwed(rowSet.getBigDecimal("current_rent_owed"));
+        tenant.setHasPet(rowSet.getBoolean("has_pet"));
+        tenant.setMoveInDate(rowSet.getDate("move_in_date").toLocalDate());
         return tenant;
     }
 

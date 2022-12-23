@@ -7,29 +7,30 @@
 </head>
 <body>
 
+<div class="container">
+        <button id="open-form-button">Add Tenant</button>
+        <form id="tenant-form" style="display: none;">
+            <label for="tenantName">Tenant Name:</label><br>
+            <input type="text" id="tenantName" name="tenantName" required><br>
+            <label for="tenantPhone">Tenant Phone:</label><br>
+            <input type="text" id="tenantPhone" name="tenantPhone" required><br>
+            <label for="monthlyPayment">Monthly Payment:</label><br>
+            <input type="number" id="monthlyPayment" name="monthlyPayment" required><br>
+            <label for="currentRentOwed">Current Rent Owed:</label><br>
+            <input type="number" id="currentRentOwed" name="currentRentOwed" required><br>
+            <label for="hasPet">Has Pet:</label><br>
+            <input type="checkbox" id="hasPet" name="hasPet" ><br>
+            <label for="moveInDate">Move-in Date:</label><br>
+            <input type="date" id="moveInDate" name="moveInDate" required><br><br>
+            <input type="submit" value="Submit">
 
-<button id="open-form-button">Add Tenant</button>
+        </form>
 
-<form id="tenant-form" style="display: none;">
-    <label for="tenantName">Tenant Name:</label><br>
-    <input type="text" id="tenantName" name="tenantName" required><br>
-    <label for="tenantPhone">Tenant Phone:</label><br>
-    <input type="text" id="tenantPhone" name="tenantPhone" required><br>
-    <label for="monthlyPayment">Monthly Payment:</label><br>
-    <input type="number" id="monthlyPayment" name="monthlyPayment" required><br>
-    <label for="currentRentOwed">Current Rent Owed:</label><br>
-    <input type="number" id="currentRentOwed" name="currentRentOwed" required><br>
-    <label for="hasPet">Has Pet:</label><br>
-    <input type="checkbox" id="hasPet" name="hasPet" required><br>
-    <label for="moveInDate">Move-in Date:</label><br>
-    <input type="date" id="moveInDate" name="moveInDate" required><br><br>
-    <input type="submit" value="Submit">
-    <button id="close-form-button">Close Form</button>
-</form>
 
 <button id="open-list-button">View Tenants</button>
 
-<ul id="tenant-list"></ul>
+<table class="tenant-table" id="list-of-tenants"></table>
+</div>
 </body>
 <script src="index.js"></script>
 </html>

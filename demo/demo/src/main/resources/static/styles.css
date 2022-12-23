@@ -6,33 +6,7 @@ body {
   background-color: #333333;
 }
 
-.container {
-  display: flex;
-    flex-direction: column;
-  justify-content: center;
-}
-
-.homepage-button-link {
-  display: inline-block;
-  width: 50%;
-  background-color: #663399;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.homepage-button-link:hover {
-  background-color: #552288;
-}
-
-.homepage-button-link:active {
-  transform: scale(0.95);
-}
-
+/* Form */
 form {
   width: 30%;
   background-color: #333333;
@@ -88,13 +62,53 @@ form input[type="submit"]:hover {
   background-color: #552288;
 }
 
-.hidden {
-  background-color: transparent;
+/* Tenant list */
+ul#tenant-list {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+  background-color: #666666;
+  width: 50%;
+  border-radius: 5px;
 }
 
+ul#tenant-list li {
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #444444;
+  border-radius: 4px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+}
+
+/* Table */
+.tenant-table {
+  width: 60%;
+  border-collapse: collapse;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #444444;
+  border-radius: 4px;
+}
+
+.tenant-table th {
+  text-align: left;
+  padding: 12px 20px;
+  border-bottom: 1px solid #666666;
+  font-weight: bold;
+}
+
+.tenant-table td {
+  text-align: left;
+  padding: 12px 20px;
+  border-bottom: 1px solid #666666;
+}
+
+/* Buttons */
 button#open-form-button,
 button#open-list-button {
   display: inline-block;
+  width: 50%;
   background-color: #663399;
   color: white;
   padding: 14px 20px;
@@ -115,63 +129,29 @@ button#open-list-button:active {
   transform: scale(0.95);
 }
 
-.tenant-table {
-  width: 80%;
-  margin: 0 auto;
-  border-collapse: collapse;
-  font-size: 14px;
-  color: #ffffff;
-  background-color: #444444;
+/* Homepage */
+.homepage-button-link {
+  display: inline-block;
+  width: 50%;
+  background-color: #663399;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
   border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-.tenant-table th {
-  text-align: left;
-  padding: 12px 20px;
-  border-bottom: 1px solid #666666;
-  font-weight: bold;
+.homepage-button-link:hover {
+  background-color: #552288;
 }
 
-.tenant-table td {
-  width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-  padding: 12px 20px;
-  border-bottom: 1px solid #666666;
+.homepage-button-link:active {
+  transform: scale(0.95);
 }
 
-.tenant-table tr:nth-child(odd) {
-  background-color: #555555;
-}
-
-.tenant-table tr:nth-child(even) {
-  background-color: #444444;
-}
-
-
-@media (max-width: 600px) {
-  form {
-    width: 90%;
-  }
-
-  form label {
-    font-size: 12px;
-  }
-
-  form input[type="text"],
-  form input[type="number"],
-  form input[type="date"] {
-    padding: 6px 10px;
-  }
-
-  form input[type="submit"] {
-    padding: 10px;
-  }
-
-
-
-
-
+/* Hidden elements */
+.hidden {
+  background-color: transparent;
 }
