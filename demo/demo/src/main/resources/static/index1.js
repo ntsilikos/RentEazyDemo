@@ -1,6 +1,6 @@
 let formOpen = false;
 const openFormButton = document.getElementById('open-form-button');
-const form = document.getElementById('tenant-form');
+const formAddTenant = document.getElementById('tenant-form');
 openFormButton.addEventListener('click', () => {
   // Call the getTenants function
   if(formOpen == false) {
@@ -36,9 +36,40 @@ viewTenantsButton.addEventListener('click', () => {
   }
 });
 
+//transaction-form
+const transactionForm = document.getElementById('transaction-form');
+
+transactionForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const tenantName = document.getElementById('tenantNameForTransaction').value;
+  const amountPaid = document.getElementById('amountPaid').value;
+  const paidDate = document.getElementById('paidDate').value;
+
+  const transaction = {
+    amount: amountPaid,
+    paymentDate: paidDate
+  };
+
+  fetch('/transactions/' + tenantName, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(transaction)
+  }).then(response => {
+    if (response.ok) {
+      // Transaction was created successfully
+      console.log('Transaction created');
+    } else {
+      // There was an error creating the transaction
+      console.error('Error creating transaction');
+    }
+  });
+});
 
 
-form.addEventListener('submit', (event) => {
+formAddTenant.addEventListener('submit', (event) => {
   event.preventDefault();
   const tenantName = document.getElementById('tenantName').value;
   const tenantPhone = document.getElementById('tenantPhone').value;
@@ -60,6 +91,23 @@ form.addEventListener('submit', (event) => {
       getTenants();
     });
 });
+
+
+formAddTenant.addEventListern('submit', (event) =>{
+  event.preventDefault();
+  const 
+})
+
+
+
+
+
+
+
+
+
+
+
 
 const deleteButtons = document.getElementsByClassName('delete-button');
 for (let i = 0; i < deleteButtons.length; i++) {

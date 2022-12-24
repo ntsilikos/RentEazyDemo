@@ -1,8 +1,10 @@
 package com.RentEazy.demo.Contoller;
 
 import com.RentEazy.demo.Dao.JdbcTenantDao;
+import com.RentEazy.demo.Dao.JdbcTransactionDao;
 import com.RentEazy.demo.Dao.TenantDao;
 import com.RentEazy.demo.Model.Tenant;
+import com.RentEazy.demo.Model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +20,8 @@ public class MainController {
 
     @Autowired
     JdbcTenantDao tenantDao;
+    @Autowired
+    JdbcTransactionDao transactionDao;
 
     @RequestMapping(path = "/api/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public String testControl() {
@@ -46,6 +50,12 @@ public class MainController {
     @RequestMapping(path = "/tenants", method = RequestMethod.POST, consumes = "application/json")
     public boolean createTenant(@RequestBody Tenant tenant) {
         return tenantDao.create(tenant);
+    }
+
+    @PostMapping
+    @RequestMapping(path = "/transactions/{name}", method = RequestMethod.POST, consumes = "application/json")
+    public boolean createTransaction(@RequestBody Transaction transaction, @PathVariable String name) {
+        return transactionDao.create(transaction, name);
     }
 
 }

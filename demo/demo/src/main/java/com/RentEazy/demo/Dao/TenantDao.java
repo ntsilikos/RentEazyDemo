@@ -10,8 +10,8 @@ public interface TenantDao {
     boolean create(Tenant tenant);
     boolean delete(String name);
     boolean edit(String name);
+
     ArrayList<Tenant> listTenants();
     ArrayList<Tenant> getTenantByName(String name);
     Tenant mapRowToTenant(SqlRowSet rowSet);
-    void
 }

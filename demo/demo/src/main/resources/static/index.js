@@ -36,6 +36,23 @@ viewTenantsButton.addEventListener('click', () => {
   }
 });
 
+//open-transaction-form
+let transactionFormOpen = false;
+const openTransactionFormButton = document.getElementById('open-transaction-form');
+const transactionForm = document.getElementById('transaction-form');
+openTransactionFormButton.addEventListener('click', () => {
+  // Call the getTenants function
+  if(transactionFormOpen == false) {
+        transactionForm.style.display = 'block';
+        openTransactionFormButton.innerHTML = "Close Form"
+        transactionFormOpen = true;
+  }
+  else {
+        openTransactionFormButton.innerHTML = "Add Transaction"
+        transactionFormOpen = false;
+        transactionForm.style.display = 'none'
+  }
+});
 
 
 form.addEventListener('submit', (event) => {
@@ -116,3 +133,33 @@ function getTenants(name) {
       }
     });
 }
+
+
+transactionForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const tenantName = document.getElementById('tenantNameForTransaction').value;
+  const amountPaid = document.getElementById('amountPaid').value;
+  const paidDate = document.getElementById('paidDate').value;
+
+  const transaction = {
+    amount: amountPaid,
+    paymentDate: paidDate
+  };
+
+  fetch('/transactions/' + tenantName, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(transaction)
+  }).then(response => {
+    if (response.ok) {
+      // Transaction was created successfully
+      console.log('Transaction created');
+    } else {
+      // There was an error creating the transaction
+      console.error('Error creating transaction');
+    }
+  });
+});
