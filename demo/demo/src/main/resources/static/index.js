@@ -54,6 +54,7 @@ openTransactionFormButton.addEventListener('click', () => {
   }
 });
 
+const TenantFormSubmitStatus = document.getElementById('status-response-tenant-form');
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -71,7 +72,21 @@ form.addEventListener('submit', (event) => {
     },
     body: JSON.stringify(tenant),
   })
-    .then((response) => response.json())
+     .then((response) => {
+       if (response.status >= 200 && response.status < 300) {
+         // Transaction was created successfully
+         console.log('Transaction created');
+         TenantFormSubmitStatus.innerHTML = 'Tenant created! :)'
+         setInterval(function(){TenantFormSubmitStatus.innerHTML = ''},3000);
+         return response.json();
+       } else {
+         // There was an error creating the transaction
+         console.error('Error creating transaction');
+         TenantFormSubmitStatus.innerHTML = 'Error creating tenant! :('
+         setInterval(function(){TenantFormSubmitStatus.innerHTML = ''},3000);
+         throw new Error(response.statusText);
+       }
+     })
     .then((data) => {
       console.log(data);
       getTenants();

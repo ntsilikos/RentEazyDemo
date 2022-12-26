@@ -36,9 +36,16 @@ public class MainController {
     }
 
 
+
     @GetMapping("/tenants")
     public ArrayList<Tenant> listTenants() {
-        return tenantDao.listTenants();
+        try {
+            return tenantDao.listTenants();
+        } catch (Exception e) {
+            // log the exception
+            // return an empty list or a default list
+            return new ArrayList<Tenant>();
+        }
     }
 
     @GetMapping("/tenants/{name}")
@@ -46,10 +53,17 @@ public class MainController {
         return tenantDao.getTenantByName(name);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @RequestMapping(path = "/tenants", method = RequestMethod.POST, consumes = "application/json")
     public boolean createTenant(@RequestBody Tenant tenant) {
-        return tenantDao.create(tenant);
+        try {
+            return tenantDao.create(tenant);
+        } catch (Exception e) {
+            // log the exception
+            // return a default value
+            return false;
+        }
     }
 
     @PostMapping
