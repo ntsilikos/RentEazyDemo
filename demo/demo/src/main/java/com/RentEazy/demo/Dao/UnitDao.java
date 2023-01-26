@@ -1,4 +1,4 @@
 package com.RentEazy.demo.Dao;
 
-public class JdbcApartmentDao {
+public interface UnitDao {
 }

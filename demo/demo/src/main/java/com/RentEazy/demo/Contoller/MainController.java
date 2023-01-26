@@ -66,10 +66,45 @@ public class MainController {
         }
     }
 
+    @PutMapping
+    @RequestMapping(path = "/tenants/{name}", method = RequestMethod.PUT, consumes = "application/json")
+    public boolean editTenant(@RequestBody Tenant tenant, @PathVariable String name) {
+        try {
+            return tenantDao.edit(tenant);
+        } catch (Exception e) {
+            // log the exception
+            // return a default value
+            return false;
+        }
+    }
+
+    @GetMapping("/transactions/{name}")
+    public ArrayList<Transaction> getTransactionByName(@PathVariable String name) {
+        return transactionDao.getTransactionsByName(name);
+    }
+
+    @GetMapping("/transactions")
+    public ArrayList<Transaction> listTransactions() {
+        try {
+            return transactionDao.listTransactions();
+        } catch (Exception e) {
+            // log the exception
+            // return an empty list or a default list
+            return new ArrayList<Transaction>();
+        }
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @RequestMapping(path = "/transactions/{name}", method = RequestMethod.POST, consumes = "application/json")
     public boolean createTransaction(@RequestBody Transaction transaction, @PathVariable String name) {
         return transactionDao.create(transaction, name);
+    }
+
+    @DeleteMapping("/transactions/{transactionId}")
+    @ResponseBody
+    public boolean deleteTransaction(@PathVariable int transactionId) {
+        return transactionDao.delete(transactionId);
     }
 
 }

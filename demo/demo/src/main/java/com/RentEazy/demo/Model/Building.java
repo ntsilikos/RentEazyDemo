@@ -5,12 +5,10 @@ import java.util.List;
 public class Building {
     private String address;
     private int numUnits;
-    private List<Apartment> units;
 
-    public Building(String address, int numUnits, List<Apartment> units){
+    public Building(String address, int numUnits){
         this.address = address;
         this.numUnits = numUnits;
-        this.units = units;
     }
 
     public String getAddress() {
@@ -29,12 +27,5 @@ public class Building {
         this.numUnits = numUnits;
     }
 
-    public List<Apartment> getUnits() {
-        return units;
-    }
-
-    public void setUnits(List<Apartment> units) {
-        this.units = units;
-    }
 
 }

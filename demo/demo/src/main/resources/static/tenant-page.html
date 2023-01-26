@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Demo RentEazy</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="testing.css">
 </head>
+
 <body>
-<img id="logo" src="logos.png" alt="logo">
-<div class="container">
+    <img id="logo" src="logos.png" alt="logo">
+    <div class="container">
 
         <button id="open-form-button">Add Tenant</button>
         <form id="tenant-form" style="display: none;">
@@ -15,12 +17,15 @@
             <input type="text" id="tenantName" name="tenantName" required><br>
             <label for="tenantPhone">Tenant Phone:</label><br>
             <input type="text" id="tenantPhone" name="tenantPhone" required><br>
+            <label for="securityDeposit">Security Deposit:</label><br>
+            <input type="number" id="securityDeposit" name="securityDeposit" required><br>
             <label for="monthlyPayment">Monthly Payment:</label><br>
             <input type="number" id="monthlyPayment" name="monthlyPayment" required><br>
             <label for="currentRentOwed">Current Rent Owed:</label><br>
             <input type="number" id="currentRentOwed" name="currentRentOwed" required><br>
             <label for="hasPet">Has Pet:</label><br>
-            <input type="checkbox" id="hasPet" name="hasPet" ><br>
+
+            <input type="checkbox" id="hasPet" name="hasPet"><br>
             <label for="moveInDate">Move-in Date:</label><br>
             <input type="date" id="moveInDate" name="moveInDate" required><br><br>
             <input type="submit" value="Submit">
@@ -29,24 +34,31 @@
         </form>
 
 
-<button id="open-list-button">View Tenants</button>
+        <button id="open-tenant-list-button">View Tenants</button>
+            
+        <table class="tenant-table" id="list-of-tenants" style="display: none;"></table>
 
-<table class="tenant-table" id="list-of-tenants"></table>
+        <button id="open-transaction-form">Add Transaction</button>
 
-    <button id="open-transaction-form">Add Transaction</button>
+        <form id="transaction-form" style="display: none;">
+            <label for="tenantNameForTransaction">Tenant Name:</label><br>
+            <input type="text" id="tenantNameForTransaction" name="tenantNameForTransaction" required><br>
+            <label for="amountPaid">Amount Paid:</label><br>
+            <input type="number" id="amountPaid" name="amountPaid" required><br>
+            <label for="forCurrentMonth">For current month?:</label><br>
+            <input type="checkbox" id="forCurrentMonth" name="forCurrentMonth"><br>
+            <label for="paidDate">Payment Date:</label><br>
+            <input type="date" id="paidDate" name="paidDate" required><br><br>
+            <input type="submit" value="Submit">
+            <h4 id="status-response-transaction-form"></h4>
 
-    <form id="transaction-form" style="display: none;">
-        <label for="tenantNameForTransaction">Tenant Name:</label><br>
-        <input type="text" id="tenantNameForTransaction" name="tenantNameForTransaction" required><br>
-        <label for="amountPaid">Amount Paid:</label><br>
-        <input type="number" id="amountPaid" name="amountPaid" required><br>
-        <label for="paidDate">Payment Date:</label><br>
-        <input type="date" id="paidDate" name="paidDate" required><br><br>
-        <input type="submit" value="Submit">
+        </form>
+        <button id="open-transactions-button">View Transactions</button>
+        <table class="tenant-table" id="list-of-transactions" style="display: none;"></table>
 
-    </form>
 
-</div>
+    </div>
 </body>
 <script src="index.js"></script>
+
 </html>

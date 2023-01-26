@@ -1,62 +1,38 @@
-let formOpen = false;
-const openFormButton = document.getElementById('open-form-button');
-const form = document.getElementById('tenant-form');
-openFormButton.addEventListener('click', () => {
-  // Call the getTenants function
-  if(formOpen == false) {
-        form.style.display = 'block';
-        openFormButton.innerHTML = "Close Form"
-        formOpen = true;
-  }
-  else {
-        openFormButton.innerHTML = "Add Tenant"
-        formOpen = false;
-        form.style.display = 'none'
-  }
-});
+let tenantformOpen = false;
+const openTenantFormButton = document.getElementById('open-form-button');
+const tenantForm = document.getElementById('tenant-form');
 
 
 
-let tableOpen = false;
-const viewTenantsButton = document.getElementById('open-list-button');
-let tenantTable = document.getElementById('list-of-tenants');
-viewTenantsButton.addEventListener('click', () => {
-  // Call the getTenants function
-  if(tableOpen == false) {
-        tenantTable.style.display = 'block'
-        viewTenantsButton.innerHTML = "Close Tenants Table"
-        getTenants();
-        tableOpen = true;
+openTenantFormButton.addEventListener('click', () => {
+  if (tenantformOpen == false) {
+    tenantformOpen = true;
+    tenantForm.style.display = 'block';
+  } else {
+    tenantformOpen = false;
+    tenantForm.style.display = 'none';
+  }
+})
 
-  }
-  else {
-        viewTenantsButton.innerHTML = "Open Tenants Table"
-        tableOpen = false;
-        tenantTable.style.display = 'none'
-  }
-});
 
-//open-transaction-form
-let transactionFormOpen = false;
-const openTransactionFormButton = document.getElementById('open-transaction-form');
-const transactionForm = document.getElementById('transaction-form');
-openTransactionFormButton.addEventListener('click', () => {
-  // Call the getTenants function
-  if(transactionFormOpen == false) {
-        transactionForm.style.display = 'block';
-        openTransactionFormButton.innerHTML = "Close Form"
-        transactionFormOpen = true;
-  }
-  else {
-        openTransactionFormButton.innerHTML = "Add Transaction"
-        transactionFormOpen = false;
-        transactionForm.style.display = 'none'
-  }
-});
+
 
 const TenantFormSubmitStatus = document.getElementById('status-response-tenant-form');
 
-form.addEventListener('submit', (event) => {
+function getTenants() {
+  fetch('/tenants')
+    .then(response => response.json())
+    .then(tenants => {
+      displayTenants(tenants);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+getTenants();
+
+tenantForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const tenantName = document.getElementById('tenantName').value;
   const tenantPhone = document.getElementById('tenantPhone').value;
@@ -64,7 +40,8 @@ form.addEventListener('submit', (event) => {
   const currentRentOwed = document.getElementById('currentRentOwed').value;
   const hasPet = document.getElementById('hasPet').checked;
   const moveInDate = document.getElementById('moveInDate').value;
-  const tenant = { tenantName, tenantPhone, monthlyPayment, currentRentOwed, hasPet, moveInDate };
+  const securityDeposit = document.getElementById('securityDeposit').value
+  const tenant = { tenantName, tenantPhone, monthlyPayment, currentRentOwed, hasPet, moveInDate, securityDeposit };
   fetch('/tenants', {
     method: 'POST',
     headers: {
@@ -72,21 +49,21 @@ form.addEventListener('submit', (event) => {
     },
     body: JSON.stringify(tenant),
   })
-     .then((response) => {
-       if (response.status >= 200 && response.status < 300) {
-         // Transaction was created successfully
-         console.log('Transaction created');
-         TenantFormSubmitStatus.innerHTML = 'Tenant created! :)'
-         setInterval(function(){TenantFormSubmitStatus.innerHTML = ''},3000);
-         return response.json();
-       } else {
-         // There was an error creating the transaction
-         console.error('Error creating transaction');
-         TenantFormSubmitStatus.innerHTML = 'Error creating tenant! :('
-         setInterval(function(){TenantFormSubmitStatus.innerHTML = ''},3000);
-         throw new Error(response.statusText);
-       }
-     })
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        // Transaction was created successfully
+        console.log('Transaction created');
+        TenantFormSubmitStatus.innerHTML = 'Tenant created! :)'
+        setInterval(function () { TenantFormSubmitStatus.innerHTML = '' }, 3000);
+        return response.json();
+      } else {
+        // There was an error creating the transaction
+        console.error('Error creating transaction');
+        TenantFormSubmitStatus.innerHTML = 'Error creating tenant! :('
+        setInterval(function () { TenantFormSubmitStatus.innerHTML = '' }, 3000);
+        throw new Error(response.statusText);
+      }
+    })
     .then((data) => {
       console.log(data);
       getTenants();
@@ -94,87 +71,165 @@ form.addEventListener('submit', (event) => {
 });
 
 
-function getTenants(name) {
-  // Make a GET request to the endpoint that returns the list of tenants
-  fetch(`/tenants${name ? `?name=${name}` : ''}`)
-    .then(response => response.json()) // Parse the response as JSON
-    .then(tenants => {
-      // Get the table element
-      const table = document.getElementById('list-of-tenants');
+const tenantTable = document.getElementById('list-of-tenants');
 
-      // Clear the table
-      table.innerHTML = '';
+function displayTenants(tenants) {
+  // Clear the current table
+  tenantTable.innerHTML = '';
 
-      // Set the table headers
-      table.innerHTML = `
-        <tr>
-          <th>Name</th>
-          <th>Phone</th>
-          <th>Monthly Payment</th>
-          <th>Current Rent Owed</th>
-          <th>Has Pet</th>
-          <th>Move-in Date</th>
-        </tr>
-      `;
+  // Create table headers
+  let tableHeaders = `<tr> <th>Tenant Name</th> <th>Tenant Phone</th> <th>Security Deposit</th> <th>Actions</th> </tr>`;
+  tenantTable.innerHTML = tableHeaders;
 
-      // Add a row for each tenant
-      tenants.forEach(tenant => {
-        table.innerHTML += `
-          <tr>
-            <td>${tenant.tenantName}</td>
-            <td>${tenant.tenantPhone}</td>
-            <td>${tenant.monthlyPayment}</td>
-            <td>${tenant.currentRentOwed}</td>
-            <td>${tenant.hasPet ? 'Yes' : 'No'}</td>
-            <td>${tenant.moveInDate}</td>
-            <td><button class="delete-button" data-id="${tenant.tenantName}">Delete</button></td>
-            <td><button class="edit-button" data-id="${tenant.tenantName}">Edit</button></td>
-          </tr>
-        `;
-      });
+  // Loop through the tenants and add a row for each one
+  tenants.forEach(tenant => {
+    let newRow = `<tr> <td>${tenant.tenantName}</td> <td>${tenant.tenantPhone}</td> <td>${tenant.securityDeposit}</td> <td><button class="delete-button" data-tenant-name="${tenant.tenantName}">Delete</button></td> </tr>`;
+    tenantTable.innerHTML += newRow;
+  });
 
-      // Add event listeners to the delete buttons
-      const deleteButtons = document.getElementsByClassName('delete-button');
-      for (const button of deleteButtons) {
-        button.addEventListener('click', (event) => {
-          const tenantName = event.target.getAttribute('data-id');
-          fetch(`/tenants/${tenantName}`, {
-            method: 'DELETE',
-          }).then(() => {
-            // Refresh the table after deleting a tenant
-            getTenants();
-          });
-        });
-      }
+  // Add event listener for delete buttons
+  const deleteButtons = document.querySelectorAll('.delete-button');
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', event => {
+      let tenantName = event.target.getAttribute("data-tenant-name")
+      deleteTenant(tenantName);
     });
+  });
+}
+
+function deleteTenant(tenantName) {
+  if (confirm("Are you sure you want to delete " + tenantName + "?")) {
+    // send delete request to the server and delete the tenant
+    fetch('/tenants/' + tenantName, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (response.status >= 200 && response.status < 300) {
+          console.log("Tenant deleted");
+          getTenants();
+        } else {
+          console.error("Error deleting tenant");
+        }
+      });
+  }
 }
 
 
+
+const transactionForm = document.getElementById('transaction-form');
+const transactionFormSubmitStatus = document.getElementById('status-response-transaction-form');
+
 transactionForm.addEventListener('submit', (event) => {
   event.preventDefault();
-
   const tenantName = document.getElementById('tenantNameForTransaction').value;
-  const amountPaid = document.getElementById('amountPaid').value;
-  const paidDate = document.getElementById('paidDate').value;
-
-  const transaction = {
-    amount: amountPaid,
-    paymentDate: paidDate
-  };
-
+  const amount = document.getElementById('amountPaid').value;
+  const forCurrentMonth = document.getElementById('forCurrentMonth').checked;
+  const paymentDate = document.getElementById('paidDate').value;
+  const transaction = { tenantName, amount, forCurrentMonth, paymentDate };
   fetch('/transactions/' + tenantName, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(transaction)
-  }).then(response => {
-    if (response.ok) {
-      // Transaction was created successfully
-      console.log('Transaction created');
-    } else {
-      // There was an error creating the transaction
-      console.error('Error creating transaction');
-    }
-  });
+    body: JSON.stringify(transaction),
+  })
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        // Transaction was created successfully
+        console.log('Transaction created');
+        transactionFormSubmitStatus.innerHTML = 'Transaction created! :)'
+        setInterval(function () { transactionFormSubmitStatus.innerHTML = '' }, 3000);
+        document.getElementById('tenantNameForTransaction').innerText = '';
+        return response.json();
+      } else {
+        // There was an error creating the transaction
+        console.error('Error creating transaction');
+        transactionFormSubmitStatus.innerHTML = 'Error creating transaction! :('
+        setInterval(function () { transactionFormSubmitStatus.innerHTML = '' }, 3000);
+        throw new Error(response.statusText);
+      }
+    })
+    .then((data) => {
+      console.log(data);
+      // getTransactions();  // you can call this function if you want to update the list of transactions after the new transaction is added
+    });
 });
+
+const transactionTable = document.getElementById('list-of-transactions');
+
+function getTransactions() {
+  fetch('/transactions')
+    .then(response => response.json())
+    .then(transactions => {
+      displayTransactions(transactions);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+function displayTransactions(transactions) {
+  // Clear the current table
+  transactionTable.innerHTML = '';
+
+  // Create table headers
+  let tableHeaders = `<tr> <th>Tenant Name</th> <th>Payment Date</th> <th>Amount</th> <th>For Current Month</th> </tr>`;
+  transactionTable.innerHTML = tableHeaders;
+
+  // Loop through the transactions and add a row for each one
+  transactions.forEach(transaction => {
+    let newRow = `<tr> <td>${transaction.transactionId}</td> <td>${transaction.paymentDate}</td> <td>${transaction.amount}</td> <td>${transaction.forCurrentMonth}</td> </tr>`;
+    transactionTable.innerHTML += newRow;
+  });
+}
+
+const openTenantTableButton = document.getElementById('open-tenant-list-button');
+let tenantTableOpen = false;
+
+openTenantTableButton.addEventListener('click', () => {
+  if (tenantTableOpen == false) {
+    tenantTableOpen = true;
+    tenantTable.style.display = null;
+  } else if (tenantTableOpen == true) {
+    tenantTableOpen = false;
+    tenantTable.style.display = 'none';
+  }
+});
+
+const openTransactionTableButton = document.getElementById('open-transactions-button');
+let transactionTableOpen = false;
+
+openTransactionTableButton.addEventListener('click', () => {
+  if (transactionTableOpen == false) {
+    transactionTableOpen = true;
+    transactionTable.style.display = null;
+  } else if (transactionTableOpen == true) {
+    transactionTableOpen = false;
+    transactionTable.style.display = 'none';
+  }
+});
+
+let transactionformOpen = false;
+const openTransactionFormButton = document.getElementById('open-transaction-form');
+
+openTransactionFormButton.addEventListener('click', () => {
+if(transactionformOpen == false) {
+transactionformOpen = true;
+transactionForm.style.display = 'block';
+} else {
+transactionformOpen = false;
+transactionForm.style.display = 'none';
+}
+});
+
+getTransactions()
+  .then(transactions => {
+    displayTenants(transactions);
+  })
+
+getTenants()
+  .then(tenants => {
+    displayTenants(tenants);
+  })
+  // Make sure the tenants variable is defined and contains the correct data before calling the displayTenants function
+

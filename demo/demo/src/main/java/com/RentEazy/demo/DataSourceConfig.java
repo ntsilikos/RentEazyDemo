@@ -13,9 +13,11 @@ import javax.sql.DataSource;
 @PropertySource("classpath:application.properties")
 public class DataSourceConfig {
 
+    //Contains props from properties file
     @Autowired
     private Environment env;
 
+    //Returns instance of dataSource, to be managed by Spring.
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

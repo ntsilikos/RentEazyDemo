@@ -1,187 +1,139 @@
 * {
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background-color: #333333;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .container {
-  display: flex;
-    flex-direction: column;
-  justify-content: center;
+    background-color: #f8f8f8;
 }
 
-.homepage-button-link {
-  display: inline-block;
-  width: 50%;
-  background-color: #663399;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+#open-form-button {
+    background-color: #87BFFF;
+    color: #f7f7f7;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
 }
 
-.homepage-button-link:hover {
-  background-color: #552288;
+#tenant-form {
+    display: block;
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.homepage-button-link:active {
-  transform: scale(0.95);
+#tenant-form label {
+    margin-bottom: 10px;
 }
 
-#logo
- {
-  width: 200px;
-  height: auto;
+#tenant-form input[type="text"],
+#tenant-form input[type="number"],
+#tenant-form input[type="date"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 15px 0;
+    box-sizing: border-box;
+    background-color: white;
+    border: solid 1.5px #D3D3D3;
+    border-radius: 4px;
 }
 
-form {
-  width: 30%;
-  background-color: #333333;
-  margin: auto;
-  border: 1px solid #666666;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+#tenant-form input[type="checkbox"] {
+    width: 20px;
+    background-color: #F2F2F2;
+    height: 20px;
+    margin: 15px 0;
 }
 
-form label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #ffffff;
+#tenant-form input[type="submit"] {
+    display: flex;
+    justify-content: center;
+    background-color: #0056eab7;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 30%;
 }
 
-form input[type="text"],
-form input[type="number"],
-form input[type="date"] {
-  width: 100%;
-  padding: 12px 20px;
-  margin-bottom: 20px;
-  box-sizing: border-box;
-  border: 1px solid #666666;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #ffffff;
-  background-color: #444444;
+#tenant-form input[type="submit"]:hover {
+    background-color: #0056ea91;
 }
 
-form input[type="submit"] {
-  width: 100%;
-  background-color: #663399;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+#status-response-tenant-form {
+    margin-top: 20px;
 }
 
-#hasPet {
-  height: 30px;
-  width: 30px;
-  margin-top: -20px;
-  margin-bottom: 20px;
-}
+#transaction-form {
+    display: block;
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid lightgray;
+    }
+    
+    #transaction-form label {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    #transaction-form input[type="text"], #transaction-form input[type="number"], #transaction-form input[type="date"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+    }
 
-form input[type="submit"]:hover {
-  background-color: #552288;
-}
-
-.hidden {
-  background-color: transparent;
-}
-
-button#open-form-button,
-button#open-list-button,
-button#open-transaction-form
- {
-  display: inline-block;
-  background-color: #663399;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button#open-form-button:hover,
-button#open-list-button:hover,
-button#open-transaction-form:hover
- {
-  background-color: #552288;
-}
-
-button#open-form-button:active,
-button#open-list-button:active {
-  transform: scale(0.95);
-}
-
-.tenant-table {
-  width: 80%;
-  margin: 0 auto;
-  border-collapse: collapse;
-  font-size: 14px;
-  color: #ffffff;
-  background-color: #555555;
-  border-radius: 4px;
-}
-
-.tenant-table th {
-  text-align: left;
-  padding: 12px 20px;
-  border-bottom: 1px solid #666666;
-  font-weight: bold;
-}
-
-.tenant-table td {
-  width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-  padding: 12px 20px;
-  border-bottom: 1px solid #666666;
-}
-
-.tenant-table tr:nth-child(odd) {
-  background-color: #555555;
-}
-
-.tenant-table tr:nth-child(even) {
-  background-color: #444444;
-}
-
-
-@media (max-width: 600px) {
-  form {
-    width: 90%;
-  }
-
-  form label {
-    font-size: 12px;
-  }
-
-  form input[type="text"],
-  form input[type="number"],
-  form input[type="date"] {
-    padding: 6px 10px;
-  }
-
-  form input[type="submit"] {
-    padding: 10px;
-  }
-
-
-
-
-
-}
+    #transaction-form input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+    
+    #transaction-form input[type="submit"] {
+        background-color: #0057EA;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 300px;
+    }
+    
+    #transaction-form input[type="submit"]:hover {
+    background-color: #87BFFF;
+    }
+    
+    #status-response-transaction-form {
+    color: #87BFFF;
+    font-size: 18px;
+    }
+    
+    .transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    }
+    
+    .transaction-table th, .transaction-table td {
+    border: 1px solid #87BFFF;
+    padding: 8px;
+    text-align: left;
+    }
+    
+    #open-transactions-button {
+    background-color: #87BFFF;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    }
+    

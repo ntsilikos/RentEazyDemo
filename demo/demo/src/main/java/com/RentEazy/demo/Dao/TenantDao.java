@@ -9,7 +9,7 @@ public interface TenantDao {
 
     boolean create(Tenant tenant);
     boolean delete(String name);
-    boolean edit(String name);
+    boolean edit(Tenant tenant);
 
     ArrayList<Tenant> listTenants();
     ArrayList<Tenant> getTenantByName(String name);
