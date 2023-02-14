@@ -14,7 +14,7 @@ public class Tenant {
     private LocalDate moveInDate;
     private boolean currentMonthPaid;
     private String building;
-    private String unit_number;
+    private String unitNumber;
 
     public Tenant() {
     }
@@ -102,12 +102,12 @@ public class Tenant {
         this.building = building;
     }
 
-    public String getUnit_number() {
-        return unit_number;
+    public String getUnitNumber() {
+        return unitNumber;
     }
 
-    public void setUnit_number(String unit_number) {
-        this.unit_number = unit_number;
+    public void setUnitNumber(String unitNumber) {
+        this.unitNumber = unitNumber;
     }
 
 }

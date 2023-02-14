@@ -78,12 +78,12 @@ function displayTenants(tenants) {
   tenantTable.innerHTML = '';
 
   // Create table headers
-  let tableHeaders = `<tr> <th>Tenant Name</th> <th>Tenant Phone</th> <th>Security Deposit</th> <th>Actions</th> </tr>`;
+  let tableHeaders = `<tr> <th>Tenant Name</th> <th>Tenant Phone</th> <th>Monthly Payment</th> <th>Security Deposit</th> <th>Address</th> <th>Unit Number</th> <th>Actions</th> </tr>`;
   tenantTable.innerHTML = tableHeaders;
 
   // Loop through the tenants and add a row for each one
   tenants.forEach(tenant => {
-    let newRow = `<tr> <td>${tenant.tenantName}</td> <td>${tenant.tenantPhone}</td> <td>${tenant.securityDeposit}</td> <td><button class="delete-button" data-tenant-name="${tenant.tenantName}">Delete</button></td> </tr>`;
+    let newRow = `<tr> <td>${tenant.tenantName}</td> <td>${tenant.tenantPhone}</td> <td>${tenant.monthlyPayment}</td> <td>${tenant.securityDeposit}</td> <td>${tenant.building}</td> <td>${tenant.unitNumber}</td> <td><button class="delete-button" data-tenant-name="${tenant.tenantName}">Delete</button></td> </tr>`;
     tenantTable.innerHTML += newRow;
   });
 

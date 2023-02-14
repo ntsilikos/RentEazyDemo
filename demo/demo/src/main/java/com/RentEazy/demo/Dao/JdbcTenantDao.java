@@ -41,8 +41,12 @@ public class JdbcTenantDao implements TenantDao{
     public ArrayList<Tenant> listTenants() {
         ArrayList<Tenant> tenants = new ArrayList<>();
 
-        String sql = "SELECT *" +
-                " FROM tenants";
+        String sql = "SELECT units.*, tenants.*, buildings.* " +
+                "FROM units " +
+                "JOIN tenant_unit ON units.unit_id = tenant_unit.unit_id " +
+                "JOIN tenants ON tenant_unit.tenant_id = tenants.tenant_id " +
+                "JOIN building_unit ON units.unit_id = building_unit.unit_id " +
+                "JOIN buildings ON building_unit.building_id = buildings.id";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
@@ -80,6 +84,8 @@ public class JdbcTenantDao implements TenantDao{
         tenant.setHasPet(rowSet.getBoolean("has_pet"));
         tenant.setCurrentMonthPaid(rowSet.getBoolean("current_month_paid"));
         tenant.setMoveInDate(rowSet.getDate("move_in_date").toLocalDate());
+        tenant.setBuilding(rowSet.getString("address"));
+        tenant.setUnitNumber(rowSet.getString("unit_number"));
         return tenant;
     }
 
